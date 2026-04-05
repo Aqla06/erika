@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Ucapan Ulang Tahun</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ECG Background -->
+<div class="ecg-background">
+  <svg class="ecg-svg" viewBox="0 0 800 100" preserveAspectRatio="none">
+    <polyline class="ecg-line" points="
+      0,50
+      100,50 110,20 120,80 130,50
+      180,50 190,30 200,70 210,50
+      300,50 310,15 320,85 330,50
+      400,50 410,35 420,65 430,50
+      500,50 510,20 520,80 530,50
+      600,50 610,30 620,70 630,50
+      800,50
+    "></polyline>
+  </svg>
+</div>
+
+<div class="card">
+    <!-- Hati berdetak -->
+    <div class="heart"></div>
+
+    <!-- Foto bulat di tengah hati -->
+    <div class="photo-container">
+        <img src="images/erika.jpeg" alt="Foto">
+    </div>
+
+    <!-- Teks & animasi balon/hati kecil -->
+    <div class="text">
+        <h2>Selamat Ulang Tahun ERIKA🎉</h2>
+        <p>Semoga panjang umur, sehat selalu,<br> Dan Semoga semua impianmu tercapai, Serta dapat jodoh yang terbaik ❤️</p>
+
+        <!-- Balon -->
+        <div class="balloon" style="left:5%; animation-duration:8s;"></div>
+        <div class="balloon" style="left:15%; animation-duration:9s;"></div>
+        <div class="balloon" style="left:25%; animation-duration:7s;"></div>
+        <div class="balloon" style="left:35%; animation-duration:10s;"></div>
+        <div class="balloon" style="left:45%; animation-duration:8.5s;"></div>
+        <div class="balloon" style="left:55%; animation-duration:9.5s;"></div>
+        <div class="balloon" style="left:65%; animation-duration:7.5s;"></div>
+        <div class="balloon" style="left:75%; animation-duration:11s;"></div>
+        <div class="balloon" style="left:85%; animation-duration:8s;"></div>
+        <div class="balloon" style="left:95%; animation-duration:9s;"></div>
+
+        <!-- Hati kecil -->
+        <div class="small-heart" style="left:10%; animation-duration:6s;"></div>
+        <div class="small-heart" style="left:20%; animation-duration:7s;"></div>
+        <div class="small-heart" style="left:30%; animation-duration:6.5s;"></div>
+        <div class="small-heart" style="left:40%; animation-duration:8s;"></div>
+        <div class="small-heart" style="left:50%; animation-duration:7.5s;"></div>
+        <div class="small-heart" style="left:60%; animation-duration:8s;"></div>
+        <div class="small-heart" style="left:70%; animation-duration:7s;"></div>
+        <div class="small-heart" style="left:80%; animation-duration:6.5s;"></div>
+        <div class="small-heart" style="left:90%; animation-duration:8.5s;"></div>
+
+        <!-- Tombol hadiah -->
+        <a href="asset/hadiah.html" class="gift-button">🎁 Pilih Hadiah</a>
+    </div> <!-- Tutup .text -->
+</div> <!-- Tutup .card -->
+
+<!-- Modal hadiah -->
+<div id="gift-modal">
+  <div class="gift-content">
+    <span class="close-btn">&times;</span>
+    <iframe src="asset/hadiah.html" frameborder="0"></iframe>
+  </div>
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
