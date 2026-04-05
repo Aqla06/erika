@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Roda Hadiah Selalu Tas</title>
+<style>
+body {
+  margin: 0;
+  background: #2b1119;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.wheel-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+#wheel {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+  transition: transform 4s cubic-bezier(0.33,1,0.68,1);
+}
+
+.pointer {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 6px;
+  height: 50px;
+  background: #fff;
+  transform: translateX(-50%);
+  z-index: 10;
+  border-radius: 3px;
+}
+
+button {
+  margin-top: 20px;
+  font-size: 25px;
+  padding: 10px 20px;
+  background: #ff5c8d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover { background: #d6336c; }
+
+/* POPUP */
+#popup {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+#popup .content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+#popup .buttons {
+  margin-top: 20px;
+  position: relative;
+  height: 60px;
+}
+
+#popup button#accept {
+  padding: 10px 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#popup button#cancel {
+  padding: 10px 20px;
+  cursor: pointer;
+  position: absolute;
+}
+</style>
+</head>
+<body>
+
+<div class="wheel-container">
+  <div class="pointer"></div>
+  <svg id="wheel" viewBox="0 0 400 400">
+    <g id="segments"></g>
+  </svg>
+</div>
+
+<button onclick="spinWheel()">Putar Roda</button>
+
+<!-- POPUP -->
+<div id="popup">
+  <div class="content">
+    <h2>Hadiahmu: Nikah Sama Aku ❤️</h2>
+    <div class="buttons">
+      <button id="accept">Terima</button>
+      <button id="cancel">Nggak Di Terima</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Daftar hadiah
+const gifts = ["Main Bareng","Sepatu","Uang","ZONK","Nikah Sama Aku","ZONK"];
+const wheel = document.getElementById("wheel");
+const segGroup = document.getElementById("segments");
+const total = gifts.length;
+const colors = ["#E74C3C","#F39C12","#F1C40F","#1ABC9C","#3498DB","#9B59B6"];
+
+// Buat segmen roda
+for(let i=0;i<total;i++){
+  const start = (360/total)*i;
+  const end = (360/total)*(i+1);
+  const r = 200, rad=Math.PI/180;
+  const x1 = 200+r*Math.cos(start*rad);
+  const y1 = 200+r*Math.sin(start*rad);
+  const x2 = 200+r*Math.cos(end*rad);
+  const y2 = 200+r*Math.sin(end*rad);
+  const path = `M200,200 L${x1},${y1} A${r},${r} 0 0,1 ${x2},${y2} Z`;
+  const seg = document.createElementNS("http://www.w3.org/2000/svg","path");
+  seg.setAttribute("d",path);
+  seg.setAttribute("fill",colors[i]);
+  seg.setAttribute("stroke","#000");
+  seg.setAttribute("stroke-width","3");
+  segGroup.appendChild(seg);
+
+  const angle = start+(360/total)/2;
+  const tx = 200+(r-60)*Math.cos(angle*rad);
+  const ty = 200+(r-60)*Math.sin(angle*rad);
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.setAttribute("x",tx);
+  text.setAttribute("y",ty);
+  text.setAttribute("fill","#fff");
+  text.setAttribute("font-size","20");
+  text.setAttribute("font-weight","bold");
+  text.setAttribute("text-anchor","middle");
+  text.setAttribute("alignment-baseline","middle");
+  text.textContent = gifts[i];
+  segGroup.appendChild(text);
+}
+
+// Animasi putar
+let currentRotation = 0;
+function spinWheel(){
+  const extraSpins = 360*3;
+  const degPerSegment = 360 / total;
+  const targetSegment = 0; // Selalu "Tas"
+  const finalRotation = extraSpins + targetSegment * degPerSegment;
+  
+  currentRotation += finalRotation;
+  wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+  setTimeout(()=>{
+    document.getElementById("popup").style.display = "flex";
+  },4000);
+}
+
+// Tombol cancel kabur
+const cancelBtn = document.getElementById("cancel");
+cancelBtn.addEventListener("mouseover", () => {
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 100;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    cancelBtn.style.position = "fixed";
+    cancelBtn.style.left = x + "px";
+    cancelBtn.style.top = y + "px";
+});
+
+// Tombol terima
+const acceptBtn = document.getElementById("accept");
+acceptBtn.addEventListener("click", () => {
+    alert("Yeay! Kamu menerima ❤️");
+
+    // Kirim pesan ke parent untuk menutup modal
+    if (window.parent) {
+        window.parent.postMessage({ action: "closeGiftModal" }, "*");
+    } // naik 1 folder ke index.html
+});
+</script>
+
+</body>
+</html>
